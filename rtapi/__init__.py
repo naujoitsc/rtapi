@@ -97,7 +97,7 @@ class RTObject:
     def ObjectExistST(self, service_tag):
         """Check if object exist in database based on asset_no"""
         sql = 'SELECT name FROM Object WHERE asset_no = \''+service_tag+'\''
-        if self.db_query_one(sql) == None:
+        if self.db_query_one(sql) is None:
             return False
         else:
             return True
@@ -105,7 +105,7 @@ class RTObject:
     def ObjectExistName(self, name):
         """Check if object exist in database based on name"""
         sql = 'select id from Object where name = \''+name+'\''
-        if self.db_query_one(sql) == None:
+        if self.db_query_one(sql) is None:
             return False
         else:
             return True
@@ -113,7 +113,7 @@ class RTObject:
     def ObjectExistSTName(self, name, asset_no):
         """Check if object exist in database based on name"""
         sql = "SELECT id FROM Object WHERE name = '%s' AND asset_no = '%s'" % (name, asset_no)
-        if self.db_query_one(sql) == None:
+        if self.db_query_one(sql) is None:
             return False
         else:
             return True
@@ -144,7 +144,7 @@ class RTObject:
         # Get interface id
         sql = "SELECT name FROM Object WHERE id = %d" % (object_id)
         result = self.db_query_one(sql)
-        if result != None:
+        if result is not None:
             object_name = result[0]
         else:
             object_name = None
@@ -156,7 +156,7 @@ class RTObject:
         # Get interface id
         sql = "SELECT name FROM Object WHERE asset_no = '%s'" % (service_tag)
         result = self.db_query_one(sql)
-        if result != None:
+        if result is not None:
             object_name = result[0]
         else:
             object_name = None
@@ -168,7 +168,7 @@ class RTObject:
 
         sql = "SELECT id FROM Object WHERE asset_no = '%s'" % (service_tag)
         result = self.db_query_one(sql)
-        if result != None:
+        if result is not None:
             object_id = result[0]
         else:
             object_id = None
@@ -180,7 +180,7 @@ class RTObject:
         # Get interface id
         sql = "SELECT label FROM Object WHERE id = %d" % (object_id)
         result = self.db_query_one(sql)
-        if result != None:
+        if result is not None:
             object_label = result[0]
         else:
             object_label = None
@@ -192,7 +192,7 @@ class RTObject:
         # Get interface id
         sql = "SELECT comment FROM Object WHERE id = %d" % (object_id)
         result = self.db_query_one(sql)
-        if result != None:
+        if result is not None:
             object_comment = result[0]
         else:
             object_comment = None
@@ -211,7 +211,7 @@ class RTObject:
         # Get interface id
         sql = "SELECT id FROM Object WHERE name = '%s'" % (name)
         result = self.db_query_one(sql)
-        if result != None:
+        if result is not None:
             object_id = result[0]
         else:
             object_id = None
@@ -221,9 +221,9 @@ class RTObject:
     def CheckIfIp4IPExists(self, ip):
         """Check if ipv4 record exist in database"""
         sql = "select ip from IPv4Address where ip = INET_ATON('%s')" % (ip)
-        if self.db_query_one(sql) == None:
+        if self.db_query_one(sql) is None:
             sql = "select ip from IPv4Allocation where ip = INET_ATON('%s')" % (ip)
-            if self.db_query_one(sql) == None:
+            if self.db_query_one(sql) is None:
                 return False
             else:
                 return True
@@ -268,7 +268,7 @@ class RTObject:
         # Get interface id
         sql = "SELECT name FROM IPv4Address WHERE ip = INET_ATON('%s')" % (ip)
         result = self.db_query_one(sql)
-        if result != None:
+        if result is not None:
             ip_name = result[0]
         else:
             ip_name = None
@@ -280,7 +280,7 @@ class RTObject:
         sql = "SELECT comment FROM IPv4Address WHERE ip = INET_ATON('%s')" % (ip)
         result = self.db_query_one(sql)
         host = None
-        if result != None:
+        if result is not None:
             m = re.match("^Docker host: (.*)$", result[0])
             if m:
                 host = m.group(1)
@@ -313,12 +313,12 @@ class RTObject:
             same_flag = "no"
             attribute_type = "None"
 
-            if old_string_value != None:
+            if old_string_value is not None:
                 attribute_type = "string"
                 old_value = old_string_value
                 if old_string_value == string_value:
                     same_flag = "yes"
-            elif old_uint_value != None:
+            elif old_uint_value is not None:
                 attribute_type = "uint"
                 old_value = old_uint_value
                 if old_uint_value == uint_value:
@@ -350,7 +350,7 @@ class RTObject:
 
         result = self.db_query_one(sql)
 
-        if result != None:
+        if result is not None:
             getted_id = result[0]
         else:
             getted_id = None
@@ -363,7 +363,7 @@ class RTObject:
 
         result = self.db_query_one(sql)
 
-        if result != None:
+        if result is not None:
             getted_id = result[0]
         else:
             getted_id = None
@@ -376,7 +376,7 @@ class RTObject:
 
         result = self.db_query_one(sql)
 
-        if result != None:
+        if result is not None:
             output = [result[0], result[1], result[2]]
         else:
             output = None
@@ -397,7 +397,7 @@ class RTObject:
         # Get interface name
         sql = "SELECT name FROM Port WHERE object_id = %d AND id = %d" % (object_id, interface_id)
         result = self.db_query_one(sql)
-        if result != None:
+        if result is not None:
             port_name = result[0]
         else:
             port_name = None
@@ -409,7 +409,7 @@ class RTObject:
         # Get interface id
         sql = "SELECT id,name FROM Port WHERE object_id = %d AND name = '%s'" % (object_id, interface)
         result = self.db_query_one(sql)
-        if result != None:
+        if result is not None:
             port_id = result[0]
         else:
             port_id = None
@@ -422,7 +422,7 @@ class RTObject:
         sql = "SELECT id,name FROM Port WHERE object_id = %d AND name = '%s'" % (object_id, interface)
 
         result = self.db_query_one(sql)
-        if result == None:
+        if result is None:
 
             sql = "INSERT INTO Port (object_id,name,iif_id,type) VALUES (%d,'%s',1,24)" % (object_id, interface)
             self.db_insert(sql)
@@ -440,7 +440,7 @@ class RTObject:
         sql = "SELECT Port.name as port_name, Object.name as obj_name FROM Port INNER JOIN Object ON Port.object_id = Object.id WHERE Port.id = %d;" % (port_id)
         result = self.db_query_one(sql);
 
-        if result == None:
+        if result is None:
             return result
         else:
             port_name = result[0]
@@ -451,12 +451,12 @@ class RTObject:
         """Link two devices togetger"""
         # Get interface id
         port_id = self.GetInterfaceId(object_id, interface)
-        if port_id != None:
+        if port_id is not None:
             # Get switch object ID
             switch_object_id = self.GetObjectId(switch_name)
-            if switch_object_id != None:
+            if switch_object_id is not None:
                 switch_port_id = self.GetInterfaceId(switch_object_id, interface_switch)
-                if switch_port_id != None:
+                if switch_port_id is not None:
                     if switch_port_id > port_id:
                         select_object = 'portb'
                     else:
@@ -466,11 +466,11 @@ class RTObject:
                     # Check server interface, update or create new link
                     sql = "SELECT %s FROM Link WHERE porta = %d OR portb = %d" % (select_object, port_id, port_id)
                     result = self.db_query_one(sql)
-                    if result == None:
+                    if result is None:
                         # Check if switch port is connected to another server
                         sql = "SELECT porta,portb FROM Link WHERE porta = %d OR portb = %d" % (switch_port_id, switch_port_id)
                         result = self.db_query_one(sql)
-                        if result != None:
+                        if result is not None:
                             # Get ports id of old link
                             old_link_a, old_link_b = result
                             old_link_a_dict = self.GetPortDeviceNameById(old_link_a)
@@ -504,7 +504,7 @@ class RTObject:
                             # Check and clean previous link (switch and port)
                             sql = "SELECT porta,portb FROM Link WHERE porta = %d OR portb = %d" % (switch_port_id, switch_port_id)
                             result = self.db_query_one(sql)
-                            if result != None:
+                            if result is not None:
                                 # Get ports id of old link
                                 old_link_a, old_link_b = result
                                 old_link_a_dict = self.GetPortDeviceNameById(old_link_a)
@@ -564,7 +564,7 @@ class RTObject:
         sql = "SELECT INET_NTOA(ip) from IPv4Allocation WHERE object_id = %d AND name = '%s'" % (object_id, device)
         result = self.db_query_all(sql)
 
-        if result != None:
+        if result is not None:
             old_ips = result
 
         is_there = "no"
@@ -577,7 +577,7 @@ class RTObject:
             sql = "SELECT name FROM IPv4Allocation WHERE object_id = %d AND ip = INET_ATON('%s')" % (object_id, ip)
             result = self.db_query_all(sql)
 
-            if result != None:
+            if result is not None:
                 if result != ():
                     sql = "DELETE FROM IPv4Allocation WHERE object_id = %d AND ip = INET_ATON('%s')" % (object_id, ip)
                     self.db_insert(sql)
@@ -598,7 +598,7 @@ class RTObject:
         sql = "SELECT HEX(ip) FROM IPv6Allocation WHERE object_id = %d AND name = '%s'" % (object_id, device)
         result = self.db_query_all(sql)
 
-        if result != None:
+        if result is not None:
             old_ips = result
 
         is_there = "no"
@@ -611,7 +611,7 @@ class RTObject:
             sql = "SELECT name FROM IPv6Allocation WHERE object_id = %d AND ip = UNHEX('%s')" % (object_id, ip6)
             result = self.db_query_all(sql)
 
-            if result != None:
+            if result is not None:
                 if result != ():
                     sql = "DELETE FROM IPv6Allocation WHERE object_id = %d AND ip = UNHEX('%s')" % (object_id, ip6)
                     self.db_insert(sql)
@@ -627,7 +627,7 @@ class RTObject:
         sql = "SELECT dict_key FROM Dictionary WHERE dict_value LIKE '%"+searchstring+"%'"
 
         result = self.db_query_one(sql)
-        if result != None:
+        if result is not None:
             getted_id = result[0]
         else:
             getted_id = None
@@ -639,7 +639,7 @@ class RTObject:
         sql = "SELECT id FROM Chapter WHERE name = '"+value+"'"
 
         result = self.db_query_one(sql)
-        if result != None:
+        if result is not None:
             getted_id = result[0]
         else:
             getted_id = None
@@ -651,7 +651,7 @@ class RTObject:
         sql = "SELECT dict_key FROM Dictionary WHERE dict_value = '%s'" % (dict_value)
 
         result = self.db_query_one(sql)
-        if result != None:
+        if result is not None:
             getted_id = result[0]
         else:
             getted_id = None
@@ -663,7 +663,7 @@ class RTObject:
         sql = "SELECT dict_value FROM Dictionary WHERE dict_key = %d " % (dict_key)
 
         result = self.db_query_one(sql)
-        if result != None:
+        if result is not None:
             getted_id = result[0]
         else:
             getted_id = None
@@ -685,14 +685,14 @@ class RTObject:
         sql = "SELECT %s FROM AttributeValue WHERE object_id = %d AND attr_id = %d" % (attr_type, object_id, attr_id)
         res = self.db_query_one(sql)
 
-        if(res is None):
+        if res is None:
             return None
         else:
             return res[0]
 
     def InsertOrUpdateStringAttribute(self, object_id, objtype_id, attr_id, new_value):
         old_value = self.QueryTypedAttributeValue(object_id, attr_id, 'string_value')
-        if(old_value is None):
+        if old_value is None:
             # INSERT
             return "INSERT INTO AttributeValue (object_id,object_tid,attr_id,string_value) VALUES (%d,%d,%d,'%s')" % (object_id, objtype_id, attr_id, new_value)
         else:
@@ -701,19 +701,19 @@ class RTObject:
 
     def InsertOrUpdateUintAttribute(self, object_id, objtype_id, attr_id, new_value):
         old_value = self.QueryTypedAttributeValue(object_id, attr_id, 'uint_value')
-        if(old_value is None):
+        if old_value is None:
             # INSERT
             return "INSERT INTO AttributeValue (object_id,object_tid,attr_id,uint_value) VALUES (%d,%d,%d,%d)" % (object_id, objtype_id, attr_id, new_value)
-        elif(old_value != new_value):
+        elif old_value is not new_value:
             # UPDATE
             return "UPDATE AttributeValue SET uint_value = %d WHERE object_id = %d AND attr_id = %d AND object_tid = %d" % (new_value, object_id, attr_id, objtype_id)
 
     def InsertOrUpdateFloatAttribute(self, object_id, objtype_id, attr_id, new_value):
         old_value = self.QueryTypedAttributeValue(object_id, attr_id, 'float_value')
-        if(old_value is None):
+        if old_value is None:
             # INSERT
             return "INSERT INTO AttributeValue (object_id,object_tid,attr_id,float_value) VALUES (%d,%d,%d,%f)" % (object_id, objtype_id, attr_id, new_value)
-        elif(old_value != new_value):
+        elif old_value != new_value:
             # UPDATE
             return "UPDATE AttributeValue SET float_value = %f WHERE object_id = %d AND attr_id = %d AND object_tid = %d" % (new_value, object_id, attr_id, objtype_id)
 
@@ -736,7 +736,7 @@ class RTObject:
         sql = "SELECT objtype_id FROM Object WHERE id = %d" % (object_id)
         result = self.db_query_one(sql)
 
-        if(result is not None):
+        if result is not None:
             objtype_id = result[0]
         else:
             # Object not found in database - return None since we can not update an attribute on a non-existing object
@@ -746,7 +746,7 @@ class RTObject:
         sql = "SELECT type FROM Attribute WHERE id = %d" % (attr_id)
         result = self.db_query_one(sql)
 
-        if(result is not None):
+        if result is not None:
             attr_type = result[0]
         else:
             # Attribute with given ID does not exist - return None since the requested attribute does not exist
@@ -759,7 +759,7 @@ class RTObject:
         sql = func(object_id, objtype_id, attr_id, new_value)
 
         # If there is nothing to update (eg. old_value == new_value) then the InsertOrUpdateAttribute_TypeFunction returns None and there is no SQL statement to execute
-        if(sql is not None):
+        if sql is not None:
             self.db_insert(sql)
 
     def CleanUnusedInterfaces(self, object_id, interface_list):
@@ -772,7 +772,7 @@ class RTObject:
         # Add drac to interface list
         interfaces.append("drac")
 
-        if result != None:
+        if result is not None:
             for row in result:
                 if row[1] not in interfaces:
                     # Remove IPv4 allocation
@@ -799,14 +799,14 @@ class RTObject:
 
         result = self.db_query_all(sql)
 
-        if result != None:
+        if result is not None:
             old_virtuals_ids = result
             delete_virtual_id = []
             new_virtuals_ids = []
             # Translate names into ids
             for new_virt in virtual_servers:
                 new_id = self.GetObjectId(new_virt)
-                if new_id != None:
+                if new_id is not None:
                     new_virtuals_ids.append(new_id)
 
             for old_id in old_virtuals_ids:
@@ -837,7 +837,7 @@ class RTObject:
             sql = "SELECT INET_NTOA(ip) FROM IPv4Address WHERE ip >= %d AND ip <= %d and comment = '%s'" % (ip_int, ip_int_max, comment)
 
             result = self.db_query_all(sql)
-            if result != None:
+            if result is not None:
                 return "\n".join(str(x[0])+"/"+str(ip_mask) for x in result)
             else:
                 return False
@@ -858,7 +858,7 @@ class RTObject:
             sql = "select HEX(ip) from IPv6Address where ip between UNHEX('%s') AND UNHEX('%s') AND comment = '%s';" % (ip, ip_max, comment)
 
             result = self.db_query_all(sql)
-            if result != None:
+            if result is not None:
                 return "\n".join(str(re.sub(r'(.{4})(?=.)', r'\1:', x[0]).lower())+"/"+str(ip_mask) for x in result)
             else:
                 return False
@@ -873,7 +873,7 @@ class RTObject:
 
         result = self.db_query_all(sql)
 
-        if result != None:
+        if result is not None:
             old_ips = result
             delete_ips = []
 
@@ -895,7 +895,7 @@ class RTObject:
         sql = "SELECT HEX(ip) FROM IPv6Allocation WHERE object_id = %d AND name = '%s'" % (object_id, device)
         result = self.db_query_all(sql)
 
-        if result != None:
+        if result is not None:
             old_ips = result
             delete_ips = []
             new_ip6_ips = []
@@ -931,7 +931,7 @@ class RTObject:
         sql = "SELECT child_entity_id FROM EntityLink WHERE parent_entity_id = %d AND child_entity_id = %d" % (object_id, virtual_id)
         result = self.db_query_one(sql)
 
-        if result == None:
+        if result is None:
             sql = "INSERT INTO EntityLink (parent_entity_type, parent_entity_id, child_entity_type, child_entity_id) VALUES ('object',%d,'object',%d)" % (object_id, virtual_id)
             self.db_insert(sql)
             text = "Linked virtual %s with hypervisor" % self.GetObjectName(virtual_id)
@@ -946,7 +946,7 @@ class RTObject:
         sql = "SELECT string_value FROM AttributeValue WHERE object_id = %d AND object_tid = 4 AND attr_id = %d" % (server_id, slot_attribute_id)
         result = self.db_query_one(sql)
 
-        if result != None:
+        if result is not None:
             # Try to update Value, if no success Insert new value
             sql = "UPDATE AttributeValue SET string_value = '%s' WHERE object_id = %d AND object_tid = 4 AND attr_id = %d" % (slot_number, server_id, slot_attribute_id)
             self.db_insert(sql)
@@ -960,7 +960,7 @@ class RTObject:
         sql = "SELECT parent_entity_id FROM EntityLink WHERE child_entity_type = 'object' AND child_entity_id = %d" % (server_id)
         result = self.db_query_one(sql)
 
-        if result != None:
+        if result is not None:
         # Object is connected to someone
             if result[0] != chassis_id:
             # Connected to differend chassis/chassis
