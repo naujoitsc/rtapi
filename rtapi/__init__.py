@@ -110,6 +110,14 @@ class RTObject:
         else:
             return True
 
+    def ObjectExistLabel(self, label):
+        """Check if object exist in database based on label"""
+        sql = "SELECT id FROM Object WHERE label = '%s'" % (label)
+        if self.db_query_one(sql) is None:
+            return False
+        else:
+            return True
+
     def ObjectExistSTName(self, name, asset_no):
         """Check if object exist in database based on name"""
         sql = "SELECT id FROM Object WHERE name = '%s' AND asset_no = '%s'" % (name, asset_no)
@@ -151,6 +159,17 @@ class RTObject:
 
         return object_name
 
+    def GetObjectAsset(self, object_id):
+        """Translate Object ID Object Asset"""
+        sql = "SELECT asset_no FROM Object WHERE id = %d" % (object_id)
+        result = self.db_query_one(sql)
+        if result is not None:
+            asset_no = result[0]
+        else:
+            asset_no = None
+
+        return asset_no
+
     def GetObjectNameByAsset(self, service_tag):
         """Translate Object AssetTag to Object Name"""
         # Get interface id
@@ -167,6 +186,29 @@ class RTObject:
         """Get Object ID by Asset Tag"""
 
         sql = "SELECT id FROM Object WHERE asset_no = '%s'" % (service_tag)
+        result = self.db_query_one(sql)
+        if result is not None:
+            object_id = result[0]
+        else:
+            object_id = None
+
+        return object_id
+
+    def GetObjectNameByLabel(self, label):
+        """Get Object Name by Label"""
+        # Get Object Name by Label
+        sql = "SELECT name FROM Object WHERE label = '%s'" % (label)
+        result = self.db_query_one(sql)
+        if result is not None:
+            object_name = result[0]
+        else:
+            object_name = None
+
+        return object_name
+
+    def GetObjectIdByLabel(self, label):
+        """Get Object ID by Label"""
+        sql = "SELECT id FROM Object WHERE label = '%s'" % (label)
         result = self.db_query_one(sql)
         if result is not None:
             object_id = result[0]
