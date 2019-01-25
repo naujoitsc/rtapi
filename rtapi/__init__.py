@@ -306,7 +306,7 @@ class RTObject:
         sql = "SELECT string_value,uint_value FROM AttributeValue WHERE object_id = %d AND object_tid = %d AND attr_id = %d" % (object_id, object_tid, attr_id)
         result = self.db_query_one(sql)
 
-        if result != None:
+        if result is not None:
             # Check if attribute value is same and determine attribute type
             old_string_value = result[0]
             old_uint_value = result[1]
@@ -829,7 +829,7 @@ class RTObject:
         sql = "SELECT ip,mask from IPv4Network WHERE name = '%s'" % (network_name)
         result = self.db_query_one(sql)
 
-        if result != None:
+        if result is not None:
             ip_int = result[0]
             ip_mask = result[1]
             ip_int_max = (2 ** (32 - ip_mask)) + ip_int
@@ -850,7 +850,7 @@ class RTObject:
         sql = "SELECT HEX(ip),mask,hex(last_ip) from IPv6Network WHERE name = '%s'" % (network_name)
         result = self.db_query_one(sql)
 
-        if result != None:
+        if result is not None:
             ip = result[0]
             ip_mask = result[1]
             ip_max = result[2]
