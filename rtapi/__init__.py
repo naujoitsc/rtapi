@@ -260,6 +260,17 @@ class RTObject:
 
         return object_id
 
+    def GetObjectRackId(self, object_id):
+        """Get RackId for the object"""
+        sql = "SELECT DISTINCT rack_id FROM RackSpace WHERE object_id = %d" % (object_id)
+        result = self.db_query_one(sql)
+        if result is not None:
+            rack_id = result
+        else:
+            rack_id = None
+
+        return rack_id
+
     def CheckIfIp4IPExists(self, ip):
         """Check if ipv4 record exist in database"""
         sql = "select ip from IPv4Address where ip = INET_ATON('%s')" % (ip)
@@ -411,6 +422,19 @@ class RTObject:
             getted_id = None
 
         return getted_id
+
+    def GetAttributeNameById(self, attr_id):
+        """Get the attribute name by searching for the id"""
+        sql = "SELECT name FROM Attribute WHERE id = '%i'" % (attr_id)
+
+        result = self.db_query_one(sql)
+
+        if result is not None:
+            getted_name = result[0]
+        else:
+            getted_name = None
+
+        return getted_name
 
     def GetAttributeValue(self, object_id, attr_id):
         """Search racktables database and get attribute values"""
